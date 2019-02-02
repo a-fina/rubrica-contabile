@@ -1,0 +1,7 @@
+C:\Users\alefi\Documents\Reflector - Copia\Disassembler\Rubri\obj\Debug\Rubri.exe
+C:\Users\alefi\Documents\Reflector - Copia\Disassembler\Rubri\obj\Debug\Rubri.pdb
+C:\Users\alefi\Documents\Reflector - Copia\Disassembler\Rubri\Rubri.exe
+C:\Users\alefi\Documents\Reflector - Copia\Disassembler\Rubri\Rubri.pdb
+C:\Users\alefi\Documents\Reflector - Copia\Disassembler\Rubri\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\alefi\Documents\Reflector - Copia\Disassembler\Rubri\obj\Debug\Rubrica.Form1.resources
+C:\Users\alefi\Documents\Reflector - Copia\Disassembler\Rubri\obj\Debug\Rubri.csproj.GenerateResource.Cache
