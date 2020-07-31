@@ -6,3 +6,11 @@ C:\Users\alefi\Documents\Reflector - Copia\Disassembler\Rubri\obj\Debug\ResolveA
 C:\Users\alefi\Documents\Reflector - Copia\Disassembler\Rubri\obj\Debug\Rubrica.Form1.resources
 C:\Users\alefi\Documents\Reflector - Copia\Disassembler\Rubri\obj\Debug\Rubri.csproj.GenerateResource.Cache
 C:\Users\alefi\Documents\Reflector - Copia\Disassembler\Rubri\obj\Debug\Rubrica.MainForm.resources
+C:\Users\alefi\Documents\LaNuovaRubrica\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\alefi\Documents\LaNuovaRubrica\obj\Debug\Rubrica.Form1.resources
+C:\Users\alefi\Documents\LaNuovaRubrica\obj\Debug\Rubrica.MainForm.resources
+C:\Users\alefi\Documents\LaNuovaRubrica\obj\Debug\Rubri.csproj.GenerateResource.Cache
+C:\Users\alefi\Documents\LaNuovaRubrica\obj\Debug\Rubri.exe
+C:\Users\alefi\Documents\LaNuovaRubrica\obj\Debug\Rubri.pdb
+C:\Users\alefi\Documents\LaNuovaRubrica\Rubri.exe
+C:\Users\alefi\Documents\LaNuovaRubrica\Rubri.pdb

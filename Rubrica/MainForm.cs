@@ -206,10 +206,10 @@
 		{
 			
 			bool flag = false;
-			double num = 0.0;
-			double num2 = 0.0;
-			double num3 = 0.0;
-			double num4 = 0.0;
+			double numTotVers = 0.0;
+			double numTotIncassato = 0.0;
+			double numTotConco = 0.0;
+			double numTotRiman = 0.0;
 			try
 			{
 				Form2 form = new Form2();
@@ -226,32 +226,39 @@
 						{
 							form.Show();
 						}
-						this.totV.Text = num.ToString();
-						if (num4 < 0.0)
+						this.totV.Text = numTotVers.ToString();
+						if (numTotRiman < 0.0)
 						{
-							num4 = 0.0;
+							numTotRiman = 0.0;
 						}
-						this.totR.Text = num4.ToString();
-						this.totC.Text = num3.ToString();
-						this.totInc.Text = "XXXX" + num2.ToString();
+						this.totR.Text = numTotRiman.ToString();
+						this.totC.Text = numTotConco.ToString();
+						this.totInc.Text = numTotIncassato.ToString();
 						this.Refresh();
 						break;
 					}
 					this.listView1.Items[numRigaCorrente].BackColor = Color.White;
 					flag = false;
-					string[] strArray = new string[3];
+					string[] strDataCorrente = new string[3];
 					char[] separator = new char[] { '\\' };
-					strArray = this.listView1.Items[numRigaCorrente].SubItems[0].Text.Split(separator);
-					double dataCorrente = ((Convert.ToInt32(strArray[0]) * 0x2710) + (Convert.ToInt32(strArray[1]) * 100)) + Convert.ToInt32(strArray[2]);
+					strDataCorrente = this.listView1.Items[numRigaCorrente].SubItems[0].Text.Split(separator);
+					double dataCorrente = ((Convert.ToInt32(strDataCorrente[0]) * 0x2710) + 
+					                       (Convert.ToInt32(strDataCorrente[1]) * 100)) + 
+											Convert.ToInt32(strDataCorrente[2]);
 					
-					if (( (Convert.ToInt32(this.AnnoInc.Text) == Convert.ToInt32(strArray[0])) && 
-					      (Convert.ToInt32(this.MeseInc.Text) == Convert.ToInt32(strArray[1])) ) && 
-					      (this.listView1.Items[numRigaCorrente].SubItems[4].Text != "C"))
+					double dataTotaleIncMese = (Convert.ToInt32(this.AnnoInc.Text) * 0x2710) + 
+					                           (Convert.ToInt32(this.MeseInc.Text) * 100);
+					//if ( (Convert.ToInt32(dataTotaleIncMese) >= ( (Convert.ToInt32(strDataCorrente[0]) * 0x2710) + (Convert.ToInt32(strDataCorrente[1]) * 100)) ) && 
+
+					// Calcolo il totale incassato per il mese selezionato in Mese	
+					if (( (Convert.ToInt32(this.AnnoInc.Text) == Convert.ToInt32(strDataCorrente[0])) && 
+					      (Convert.ToInt32(this.MeseInc.Text) == Convert.ToInt32(strDataCorrente[1])) ) && 
+					      this.listView1.Items[numRigaCorrente].SubItems[4].Text != "C")
 					{
-						// ATTENZIONE: 
-						num2 += Convert.ToInt32(this.listView1.Items[numRigaCorrente].SubItems[3].Text);
+						numTotIncassato += Convert.ToInt32(this.listView1.Items[numRigaCorrente].SubItems[3].Text);
 					}
 					
+					// Flag evidenzia in giallo e calcolo totalini
 					if (((this.Cli.Text != "") && this.checkBoxCli.Checked) && this.listView1.Items[numRigaCorrente].SubItems[1].Text.StartsWith(this.Cli.Text))
 					{
 						if (!this.checkBoxData.Checked)
@@ -280,13 +287,13 @@
 						this.listView1.Items[numRigaCorrente].BackColor = Color.Yellow;
 						if (this.listView1.Items[numRigaCorrente].SubItems[4].Text == "C")
 						{
-							num3 += Convert.ToDouble(this.listView1.Items[numRigaCorrente].SubItems[3].Text);
-							num4 += Convert.ToDouble(this.listView1.Items[numRigaCorrente].SubItems[3].Text);
+							numTotConco += Convert.ToDouble(this.listView1.Items[numRigaCorrente].SubItems[3].Text);
+							numTotRiman += Convert.ToDouble(this.listView1.Items[numRigaCorrente].SubItems[3].Text);
 						}
 						else
 						{
-							num += Convert.ToDouble(this.listView1.Items[numRigaCorrente].SubItems[3].Text);
-							num4 -= Convert.ToDouble(this.listView1.Items[numRigaCorrente].SubItems[3].Text);
+							numTotVers += Convert.ToDouble(this.listView1.Items[numRigaCorrente].SubItems[3].Text);
+							numTotRiman -= Convert.ToDouble(this.listView1.Items[numRigaCorrente].SubItems[3].Text);
 						}
 						item.SubItems.Add(this.listView1.Items[numRigaCorrente].SubItems[1].Text);
 						item.SubItems.Add(this.listView1.Items[numRigaCorrente].SubItems[2].Text);
@@ -366,15 +373,15 @@
 											break;
 										}
 										char[] separator = new char[] { '\x00b1' };
-										string[] strArray = str2.Replace("###", "\x00b1").Split(separator);
-										if ((filtra_cliente == "") || strArray[2].StartsWith(filtra_cliente))
+										string[] strDataCorrente = str2.Replace("###", "\x00b1").Split(separator);
+										if ((filtra_cliente == "") || strDataCorrente[2].StartsWith(filtra_cliente))
 										{
-											ListViewItem item = new ListViewItem(strArray[1]) {
+											ListViewItem item = new ListViewItem(strDataCorrente[1]) {
 												SubItems = {
-													strArray[2],
-													strArray[3],
-													strArray[4],
-													strArray[5]
+													strDataCorrente[2],
+													strDataCorrente[3],
+													strDataCorrente[4],
+													strDataCorrente[5]
 												},
 												ForeColor = Color.Black
 											};
@@ -385,13 +392,13 @@
 										{
 											this.menuItem1.Enabled = true;
 											string[] textArray1 = new string[3];
-											bool flag1 = strArray[3] != "C";
+											bool flag1 = strDataCorrente[3] != "C";
 										}
 										else
 										{
 											this.menuItem3.Enabled = false;
 											this.menuItem1.Enabled = false;
-											if ((filtra_cliente == strArray[2]) && (strArray[3] == "C"))
+											if ((filtra_cliente == strDataCorrente[2]) && (strDataCorrente[3] == "C"))
 											{
 											}
 										}
@@ -1379,14 +1386,14 @@
 			this.Importo.Value = 0M;
 			this.Cli.Text = "";
 			this.Contro.Text = "";
-			string[] strArray = new string[3];
+			string[] strDataCorrente = new string[3];
 			char[] separator = new char[] { '\\' };
 			foreach (ListViewItem item in this.listView1.SelectedItems)
 			{
-				strArray = item.SubItems[0].Text.Split(separator);
-				this.Anno.Text = strArray[0];
-				this.Mese.Text = strArray[1];
-				this.Giorno.Text = strArray[2];
+				strDataCorrente = item.SubItems[0].Text.Split(separator);
+				this.Anno.Text = strDataCorrente[0];
+				this.Mese.Text = strDataCorrente[1];
+				this.Giorno.Text = strDataCorrente[2];
 				this.Cli.Text = item.SubItems[1].Text;
 				this.Contro.Text = item.SubItems[2].Text;
 				if (item.SubItems[4].Text == "A")
@@ -1482,7 +1489,7 @@
 					Directory.CreateDirectory(this.drive + @"\archivi");
 				}
 				char[] separator = new char[] { '\\' };
-				string[] strArray = new string[] { "null" };
+				string[] strDataCorrente = new string[] { "null" };
 				int num = 0;
 				while (true)
 				{
@@ -1496,16 +1503,16 @@
 						this.DriveL.Enabled = true;
 						break;
 					}
-					strArray = this.listView1.Items[num].SubItems[0].Text.Split(separator);
-					string path = this.drive + @"\archivi\dati" + strArray[0] + ".mf";
+					strDataCorrente = this.listView1.Items[num].SubItems[0].Text.Split(separator);
+					string path = this.drive + @"\archivi\dati" + strDataCorrente[0] + ".mf";
 					FileStream stream = new FileStream(path, FileMode.Create, FileAccess.Write);
 					try
 					{
 						StreamWriter writer = new StreamWriter(stream);
-						strArray = this.listView1.Items[num].SubItems[0].Text.Split(separator);
+						strDataCorrente = this.listView1.Items[num].SubItems[0].Text.Split(separator);
 						while (true)
 						{
-							if (strArray[0] == this.listView1.Items[num].SubItems[0].Text.Substring(0, 4))
+							if (strDataCorrente[0] == this.listView1.Items[num].SubItems[0].Text.Substring(0, 4))
 							{
 								writer.Write("###" + this.listView1.Items[num].SubItems[0].Text);
 								writer.Write("###" + this.listView1.Items[num].SubItems[1].Text);
@@ -1515,7 +1522,7 @@
 								writer.WriteLine(str2);
 								if (num < (this.listView1.Items.Count - 1))
 								{
-									strArray = this.listView1.Items[num].SubItems[0].Text.Split(separator);
+									strDataCorrente = this.listView1.Items[num].SubItems[0].Text.Split(separator);
 									num++;
 									continue;
 								}
